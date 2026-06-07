@@ -1,0 +1,26 @@
+name: Download Book from BooksDL
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download-book:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Download file
+        run: |
+          echo "📥 Downloading book..."
+          curl -L -o downloads/file "https://cdn5.booksdl.lc/get.php?md5=5a435a229299ccd78e314cb75dbcb8d6&key=9GNS600SEP46XLEZ"
+          
+      - name: Check file type
+        run: |
+          echo "File details:"
+          file downloads/file
+          ls -lh downloads/file
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: downloaded-book
+          path: downloads/file
